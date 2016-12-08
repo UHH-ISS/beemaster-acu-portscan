@@ -39,6 +39,7 @@ find_library(ACU_LIBRARY
     PATHS
         ${ACU_ROOT_DIR}/lib
         ${ACU_ROOT_DIR}/cmake-build-debug/src
+        ${ACU_ROOT_DIR}/build/src
 )
 
 include(FindPackageHandleStandardArgs)

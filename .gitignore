@@ -43,6 +43,7 @@ CTestTestfile.cmake
 # Ignore .idea folder except for selected files
 .idea
 
-# Ignore CLion folder
-cmake-build-debug
+# Ignore build folders
+cmake-build-debug/
+build/
 
