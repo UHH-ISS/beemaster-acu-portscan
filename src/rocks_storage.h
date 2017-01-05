@@ -12,6 +12,8 @@ namespace beemaster {
     class RocksStorage : public acu::Storage {
     public:
         RocksStorage(std::string db_name) : acu::Storage::Storage(db_name) {}
+
+        void Persist(const acu::IncomingAlert *alert);
     };
 }
 

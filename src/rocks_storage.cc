@@ -5,5 +5,8 @@
 #include "rocks_storage.h"
 
 namespace beemaster {
+    void RocksStorage::Persist(const acu::IncomingAlert *alert) {
+
+    }
 }
 
