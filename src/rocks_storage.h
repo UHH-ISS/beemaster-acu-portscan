@@ -18,11 +18,14 @@ namespace beemaster {
     class RocksStorage : public acu::Storage {
     public:
         rocksdb::DB* Database;
-        rocksdb::Options options;
+        rocksdb::Options Options;
 
         RocksStorage(std::string db_name);
+        ~RocksStorage();
 
         void Persist(const acu::IncomingAlert *alert);
+
+        void Persist(const rocksdb::Slice& key, const rocksdb::Slice& value);
     };
 }
 
