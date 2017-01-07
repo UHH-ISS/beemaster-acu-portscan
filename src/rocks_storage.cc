@@ -33,16 +33,13 @@ namespace beemaster {
                 auto count_e = existing_value != nullptr ? *existing_value->data() : 0;
                 auto count_n = *value.data();
                 auto val = count_e + count_n;
-                new_value->append((char*)&val);
+                new_value->append((char*)&val, sizeof(val));
                 return true;
             }
 
             virtual const char* Name() const override { return "IncrementMergeOperator"; }
     };
 
-    /// Initialise and open DB
-    ///
-    /// @param db_name  The path for the database
     RocksStorage::RocksStorage(std::string db_name)
         : acu::Storage::Storage(db_name) {
             Options.create_if_missing = true;
@@ -66,5 +63,12 @@ namespace beemaster {
     bool RocksStorage::Increment(const std::string key, const count_t value) {
         rocksdb::Status status = Database->Merge(rocksdb::WriteOptions(), key, rocksdb::Slice((char*)&value, sizeof(value)));
         return status.ok();
+    }
+
+    template<typename count_t>
+    count_t RocksStorage::Get(const std::string key) {
+        std::string str = "";
+        Database->Get(rocksdb::ReadOptions(), key, &str);
+        return *((count_t*)str.data());
     }
 }
