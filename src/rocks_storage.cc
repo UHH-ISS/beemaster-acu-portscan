@@ -6,11 +6,9 @@
 
 #include "rocks_storage.h"
 #include <rocksdb/merge_operator.h>
-#include <cstdlib>
-#include <cstring>
 
 namespace beemaster {
-    class AlertMergeOperator : public rocksdb::AssociativeMergeOperator {
+    class IncrementMergeOperator : public rocksdb::AssociativeMergeOperator {
         public:
             /// Gives the client a way to express the read -> modify -> write semantics
             ///
@@ -32,25 +30,14 @@ namespace beemaster {
                                const rocksdb::Slice& value,
                                std::string* new_value,
                                rocksdb::Logger* logger) const override {
-                size_t current_size = existing_value != nullptr ? existing_value->size() : 0;
-                auto add_size = value.size();
-                auto new_size = current_size + add_size;
-
-                char *new_mem = (char*)std::malloc(new_size);
-                if (existing_value != nullptr)
-                    if (!std::memcpy(new_mem, existing_value->data(), current_size))
-                        return false;
-                if (!std::memcpy(new_mem + current_size, value.data(), add_size))
-                    return false;
-
-                // TODO CHECK MEMORY BEHAVIOUR (leaks)
-
-                *new_value = new_mem;   // TODO as if...
-
+                auto count_e = existing_value != nullptr ? *existing_value->data() : 0;
+                auto count_n = *value.data();
+                auto val = count_e + count_n;
+                new_value->append((char*)&val);
                 return true;
             }
 
-            virtual const char* Name() const override { return "AlertMergeOperator"; }
+            virtual const char* Name() const override { return "IncrementMergeOperator"; }
     };
 
     /// Initialise and open DB
@@ -59,7 +46,7 @@ namespace beemaster {
     RocksStorage::RocksStorage(std::string db_name)
         : acu::Storage::Storage(db_name) {
             Options.create_if_missing = true;
-            Options.merge_operator.reset(new AlertMergeOperator);
+            Options.merge_operator.reset(new IncrementMergeOperator);
             // TODO what about unified read/writeOptions?
             rocksdb::Status status = rocksdb::DB::Open(Options, db_name, &Database);
             assert(status.ok());
@@ -71,18 +58,13 @@ namespace beemaster {
     }
 
     void RocksStorage::Persist(const acu::IncomingAlert *alert) {
-        // insert for source
-        auto key = "srcIP:" + alert->source_ip();
-        Persist(key, rocksdb::Slice((char*)alert, sizeof(acu::IncomingAlert)));
-        // insert for destination
-        key = "destIP:" + alert->destination_ip();
-        Persist(key, rocksdb::Slice((char*)alert, sizeof(acu::IncomingAlert)));
-        // insert for topic
-        key = "topic:" + *alert->topic;
-        Persist(key, rocksdb::Slice((char*)alert, sizeof(acu::IncomingAlert)));
+        assert(alert);
+        // noop
     }
 
-    void RocksStorage::Persist(const rocksdb::Slice& key, const rocksdb::Slice& value) {
-        Database->Merge(rocksdb::WriteOptions(), key, value);
+    template<typename count_t>
+    bool RocksStorage::Increment(const std::string key, const count_t value) {
+        rocksdb::Status status = Database->Merge(rocksdb::WriteOptions(), key, rocksdb::Slice((char*)&value, sizeof(value)));
+        return status.ok();
     }
 }

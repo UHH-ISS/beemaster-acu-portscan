@@ -12,6 +12,7 @@
 
 #include <acu/storage.h>
 #include <rocksdb/db.h>
+#include <cstdint>
 
 namespace beemaster {
 
@@ -25,7 +26,8 @@ namespace beemaster {
 
         void Persist(const acu::IncomingAlert *alert);
 
-        void Persist(const rocksdb::Slice& key, const rocksdb::Slice& value);
+        template<typename count_t>
+        bool Increment(const std::string key, const count_t value);
     };
 }
 
