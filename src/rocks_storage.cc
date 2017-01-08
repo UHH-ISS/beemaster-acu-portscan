@@ -36,8 +36,8 @@ namespace beemaster {
                                std::string* new_value,
                                rocksdb::Logger* logger) const override {
 #pragma GCC diagnostic pop
-                count_t count_e = existing_value != nullptr ? *existing_value->data() : 0;
-                count_t count_n = *value.data();
+                count_t count_e = existing_value != nullptr ? *(count_t*)existing_value->data() : 0;
+                count_t count_n = *(count_t*)value.data();
                 count_t val = count_e + count_n;
                 new_value->append((char*)&val, sizeof(val));
                 return true;
