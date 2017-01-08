@@ -16,6 +16,7 @@
 
 namespace beemaster {
 
+    template <class count_t>
     class RocksStorage : public acu::Storage {
     public:
         rocksdb::DB* Database;
@@ -40,7 +41,6 @@ namespace beemaster {
         /// @param value    The value to increment by
         ///
         /// @return         Whether the increment was successful or not
-        template<typename count_t>
         bool Increment(const std::string key, const count_t value);
 
         /// Get the value of *key*.
@@ -50,9 +50,17 @@ namespace beemaster {
         /// @param key      The key which value will be returned
         ///
         /// @return         The stored value
-        template<typename count_t>
         count_t Get(const std::string key);
     };
+
+    // http://stackoverflow.com/a/8752879
+    template class RocksStorage<int>;
+    template class RocksStorage<uint8_t >;
+    template class RocksStorage<uint16_t>;
+    template class RocksStorage<uint32_t>;
+    template class RocksStorage<uint64_t>;
+    template class RocksStorage<float>;
+    template class RocksStorage<double>;
 }
 
 #endif //ACU_IMPL_ROCKSSTORAGE_H
