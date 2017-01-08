@@ -35,8 +35,6 @@ namespace beemaster {
 
         /// Increment by *value*.
         ///
-        /// @typeparam count_t  The count type (number type)
-        ///
         /// @param key      The key which value will be incremented
         /// @param value    The value to increment by
         ///
@@ -44,8 +42,6 @@ namespace beemaster {
         bool Increment(const std::string key, const count_t value);
 
         /// Get the value of *key*.
-        ///
-        /// @typeparam count_t  The count type (number type)
         ///
         /// @param key      The key which value will be returned
         ///
