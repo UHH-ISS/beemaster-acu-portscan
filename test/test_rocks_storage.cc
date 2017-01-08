@@ -9,7 +9,6 @@
 #include "catch.hpp"
 
 #include <rocks_storage.h>
-#include <iostream>
 
 TEST_CASE("Testing RocksDB initialisation", "[rocks_storage]") {
     // TODO FIXME XXX DIRTY AF
