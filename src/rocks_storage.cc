@@ -69,6 +69,12 @@ namespace beemaster {
     }
 
     template <class count_t>
+    bool RocksStorage<count_t>::Set(const std::string key, const count_t value){
+        rocksdb::Status status = Database->Put(rocksdb::WriteOptions(), key, rocksdb::Slice((char*)&value, sizeof(value)));
+        return status.ok();
+    }
+
+    template <class count_t>
     bool RocksStorage<count_t>::Increment(const std::string key, const count_t value) {
         rocksdb::Status status = Database->Merge(rocksdb::WriteOptions(), key, rocksdb::Slice((char*)&value, sizeof(value)));
         return status.ok();
@@ -79,5 +85,10 @@ namespace beemaster {
         std::string str = "";
         Database->Get(rocksdb::ReadOptions(), key, &str);
         return *((count_t*)str.data());
+    }
+
+    template<class count_t>
+    rocksdb::Iterator* RocksStorage<count_t>::GetIterator() {
+        return Database->NewIterator(rocksdb::ReadOptions());
     }
 }

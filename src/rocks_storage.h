@@ -41,12 +41,33 @@ namespace beemaster {
         /// @return         Whether the increment was successful or not
         bool Increment(const std::string key, const count_t value);
 
+        /// Sets the given *value*.
+        ///
+        /// @param key      The key which will be set
+        /// @param value    The value to set
+        ///
+        /// @return         Whether the operation was successful or not
+        bool Set(const std::string key, const count_t value);
+
         /// Get the value of *key*.
         ///
         /// @param key      The key which value will be returned
         ///
         /// @return         The stored value
         count_t Get(const std::string key);
+
+        /// Returns the Iterator over the rocksdb, which allows for key-value
+        /// traversal:
+        ///
+        /// ```
+        /// for (it->SeekToFirst(); it->Valid(); it->Next()) {
+        ///   ... it->key(); ... it->value();
+        /// }
+        /// delete it;
+        /// ```
+        /// Be aware, that the value is a rocksdb::Slice here. Cast via
+        /// `*(count_t*)it->value().data()
+        rocksdb::Iterator* GetIterator();
     };
 
     // http://stackoverflow.com/a/8752879
