@@ -97,4 +97,5 @@ TEST_CASE("Testing RocksStorage iterator", "[rocks_storage]") {
     }
 
     delete it;
+    delete storage;
 }
