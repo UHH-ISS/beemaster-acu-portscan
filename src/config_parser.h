@@ -1,4 +1,4 @@
-/* config_parser.cc
+/* config_parser.h
  * ACU Implementation
  *
  * Provide access to configuration files.
