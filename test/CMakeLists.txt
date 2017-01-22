@@ -11,6 +11,7 @@ endforeach()
 # Source files
 set(SOURCE_FILES
         main.cc
+        test_config_parser.cc
         test_rocks_storage.cc)
 
 # Add catch (testing library)

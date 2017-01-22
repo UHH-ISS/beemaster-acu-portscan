@@ -3,7 +3,8 @@
 # Source files
 set(SOURCE_FILES
         main.cc
-        rocks_storage.cc)
+        rocks_storage.cc
+        config_parser.cc)
 
 # Executable definition
 add_executable(acu-impl ${SOURCE_FILES})
