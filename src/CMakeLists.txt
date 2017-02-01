@@ -3,8 +3,12 @@
 # Source files
 set(SOURCE_FILES
         main.cc
+        config_parser.cc
         rocks_storage.cc
-        config_parser.cc)
+        portscan_aggregation.cc
+        portscan_correlation.cc
+        tcp_event.cc)
+
 
 # Executable definition
 add_executable(acu-impl ${SOURCE_FILES})
