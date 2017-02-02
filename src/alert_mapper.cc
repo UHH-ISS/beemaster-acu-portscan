@@ -8,9 +8,11 @@
 namespace beemaster {
 
     acu::IncomingAlert *AlertMapper::GetAlert(const std::string *topic, const broker::message &msg) const {
-        auto event_name = broker::get<std::string>(msg[0]);
-        if (event_name[0] == "beemaster::tcp_event") {
-            return new TcpAlert(topic, msg);
+        if (broker::is<std::string>(msg[0])) {
+            auto event_name = broker::get<std::string>(msg[0]);
+            if (event_name[0] == "beemaster::tcp_event") {
+                return new TcpAlert(topic, msg);
+            }
         }
         return acu::AlertMapper::GetAlert(topic, msg);
     }
