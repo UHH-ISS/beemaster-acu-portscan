@@ -13,9 +13,9 @@ namespace beemaster {
         SYN = 1
     };
 
-    class TcpEvent : public acu::IncomingAlert {
+    class TcpAlert : public acu::IncomingAlert {
     public:
-        explicit TcpEvent(const std::string *, const broker::message&);
+        explicit TcpAlert(const std::string *, const broker::message&);
 
         const TcpType& type() const;
     };

@@ -3,11 +3,13 @@
 # Source files
 set(SOURCE_FILES
         main.cc
+        alert_mapper.cc
         config_parser.cc
         rocks_storage.cc
         portscan_aggregation.cc
         portscan_correlation.cc
-        tcp_event.cc)
+        tcp_alert.cc
+        vector_storage.cc)
 
 
 # Executable definition

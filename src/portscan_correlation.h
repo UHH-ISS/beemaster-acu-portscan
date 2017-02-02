@@ -13,6 +13,7 @@ namespace beemaster {
     public:
         PortscanCorrelation(acu::Storage *storage, std::vector<acu::Threshold> *thresholds);
 
+        acu::OutgoingAlert* Invoke();
     };
 }
 
