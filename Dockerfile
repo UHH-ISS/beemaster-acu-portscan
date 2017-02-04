@@ -54,9 +54,11 @@ COPY Makefile /opt/acu
 COPY test /opt/acu/test
 COPY cmake /opt/acu/cmake
 COPY src /opt/acu/src
+COPY config-local.ini /opt/acu
 COPY config-uhh.ini /opt/acu
 
 WORKDIR /opt/acu
 RUN make
 
-CMD ["build/src/acu-impl", "config-uhh.ini"]
+ENTRYPOINT ["build/src/acu-impl"]
+CMD ["config-local.ini"]
