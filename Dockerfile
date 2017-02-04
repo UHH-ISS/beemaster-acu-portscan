@@ -37,24 +37,24 @@ RUN rm -rf /scratch
 RUN mkdir /opt/acu /opt/acu-fw
 
 # well not perfect, but somehow we have to get our lib in there
-COPY acu-fw/CMakeLists.txt /opt/acu-fw
-COPY acu-fw/Makefile /opt/acu-fw
-COPY acu-fw/test /opt/acu-fw/test
-COPY acu-fw/include /opt/acu-fw/include
-COPY acu-fw/cmake /opt/acu-fw/cmake
-COPY acu-fw/src /opt/acu-fw/src
+COPY mp-ids-acu-fw/CMakeLists.txt /opt/acu-fw
+COPY mp-ids-acu-fw/Makefile /opt/acu-fw
+COPY mp-ids-acu-fw/test /opt/acu-fw/test
+COPY mp-ids-acu-fw/include /opt/acu-fw/include
+COPY mp-ids-acu-fw/cmake /opt/acu-fw/cmake
+COPY mp-ids-acu-fw/src /opt/acu-fw/src
 
 WORKDIR /opt/acu-fw
 RUN make
 
 EXPOSE 9999
 
-COPY acu/CMakeLists.txt /opt/acu
-COPY acu/Makefile /opt/acu
-COPY acu/test /opt/acu/test
-COPY acu/cmake /opt/acu/cmake
-COPY acu/src /opt/acu/src
-COPY acu/config-uhh.ini /opt/acu
+COPY CMakeLists.txt /opt/acu
+COPY Makefile /opt/acu
+COPY test /opt/acu/test
+COPY cmake /opt/acu/cmake
+COPY src /opt/acu/src
+COPY config-uhh.ini /opt/acu
 
 WORKDIR /opt/acu
 RUN make
