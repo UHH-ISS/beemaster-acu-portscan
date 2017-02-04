@@ -5,13 +5,8 @@
 - git-checkout this repository
 - on the same level in the folder tree, git-checkout the ACU-FW repository
 - `make` the framework
-- `make` this concrete implementation 
+- `make` this concrete implementation
 
 #### Container build
 
-In order to build and use this ACU implementation, the `beemaster` ACU-Framework is required. The framework has to be built and bei discoverable.
-
-- git-checkout this repository
-- on the same level in the folder tree, git-checkout the ACU-FW repository
-- symlink this repositories `Dockerfile` to the above directory, so the `Dockerfile` is on the same level as `acu` and `acu-fw`
-- `docker build . -t acu && docker run -p 7777:7777 acu`
+The framework is included as submodule, so the container build is a lot easier. Simply do `docker build . -t acu && docker run -p 9999:9999 acu`
