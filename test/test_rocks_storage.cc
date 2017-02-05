@@ -40,6 +40,16 @@ TEST_CASE("Test RocksStorage write operations", "[rocks_storage]") {
         REQUIRE(storage->Get(key) == value1 + "|" + value2);
         delete storage;
     }
+
+    SECTION("Append dedupes") {
+        REQUIRE(storage->Append(key, value1));
+        REQUIRE(storage->Append(key, value2));
+        REQUIRE(storage->Append(key, value2));
+        REQUIRE(storage->Append(key, value1));
+
+        REQUIRE(storage->Get(key) == value1 + "|" + value2);
+        delete storage;
+    }
 }
 
 /*TEST_CASE("Testing RocksStorage iterator", "[rocks_storage]") {

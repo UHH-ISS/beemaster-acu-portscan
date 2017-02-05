@@ -62,6 +62,7 @@ namespace beemaster {
     private:
         /// Increments the given date by the specified interval and returns the result as string representation
         std::string increment_minutes(std::chrono::time_point<std::chrono::system_clock> ts, uint16_t interval);
+        std::string time_to_string(std::chrono::time_point<std::chrono::system_clock> ts);
     };
 }
 
