@@ -5,42 +5,13 @@
  */
 
 #include "rocks_storage.h"
+#include "utils.h"
 #include <rocksdb/merge_operator.h>
 
 
 namespace beemaster {
 
-    const char delimeter = '|';
-
-    class SetMergeOperator : public rocksdb::AssociativeMergeOperator {
-    public:
-        SetMergeOperator(char delimeter)
-                : delimeter(delimeter) {
-        }
-        virtual bool Merge(const rocksdb::Slice& key, const rocksdb::Slice* existing_value,
-                           const rocksdb::Slice& value, std::string* new_value, rocksdb::Logger* logger)
-        const override {
-            if (!existing_value) {
-                // No existing_value. Set *new_value = value
-                new_value->assign(value.data(),value.size());
-                return true;
-            } else if (existing_value->ToString().find(value.ToString()) != std::string::npos) {
-                return false;
-            }
-            else {
-                // Generic append (existing_value != null).
-                // Reserve *new_value to correct size, and apply concatenation.
-                new_value->reserve(existing_value->size() + 1 + value.size());
-                new_value->assign(existing_value->data(), existing_value->size());
-                new_value->append(1, delimeter);
-                new_value->append(value.data(), value.size());
-                return true;
-            }
-        }
-        virtual const char* Name() const override { return "SetMergeOperator"; }
-    private:
-        char delimeter;
-    };
+    char delimiter = '|';
 
     RocksStorage::RocksStorage(std::string db_name)
         : acu::Storage::Storage(db_name) {
@@ -53,7 +24,6 @@ namespace beemaster {
         options.create_if_missing = true;
         options.IncreaseParallelism();
         options.OptimizeLevelStyleCompaction();
-        options.merge_operator.reset(new SetMergeOperator(delimeter));
         rocksdb::Status status = rocksdb::DB::Open(options, db_name, &database);
         //assert(status.ok());
     }
@@ -71,8 +41,13 @@ namespace beemaster {
     }
 
     bool RocksStorage::Append(const std::string key, const std::string value){
-        rocksdb::Status status = database->Merge(writeOptions, key, value);
-        return status.ok();
+        auto existing = this->Get(key);
+        if (existing.empty()) {
+            return database->Put(writeOptions, key, value).ok();
+        } else if(!contains_string(existing, value, delimiter)) {
+            return database->Put(writeOptions, key, existing + delimiter + value).ok();
+        }
+        return true;
     }
 
     std::string RocksStorage::Get(const std::string key) {
