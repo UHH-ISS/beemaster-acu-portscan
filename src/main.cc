@@ -69,7 +69,7 @@ int main(int argc, char* argv[]) {
     auto s_port = (acu::port_t)config.GetInt("sender", "port");
 
     // setup storages
-    auto public_storage = new VectorStorage("MainStorage");
+    auto rocks = new RocksStorage("/tmp/acu_storage");
 
     // get mapper
     auto alert_mapper = new beemaster::AlertMapper();
@@ -77,10 +77,10 @@ int main(int argc, char* argv[]) {
     // setup algorithms
     auto thresholds = new std::vector<acu::Threshold>;
     thresholds->push_back(acu::Threshold(1, "test", "whatever"));
-    auto portscan = new PortscanCorrelation(public_storage, thresholds);
+    auto portscan = new PortscanCorrelation(rocks, thresholds);
 
     // setup acu
-    auto acu = acu::Acu(public_storage, alert_mapper);
+    auto acu = acu::Acu(rocks, alert_mapper);
     // - set connection details
     acu.SetReceiverInfo(r_address, r_port);
     acu.SetSenderInfo(s_address, s_port);

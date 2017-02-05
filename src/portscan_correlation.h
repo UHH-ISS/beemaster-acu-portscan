@@ -6,12 +6,13 @@
 #define ACU_IMPL_PORTSCAN_CORRELATION_H
 
 #include <acu/correlation.h>
+#include "rocks_storage.h"
 
 namespace beemaster {
 
     class PortscanCorrelation : public acu::Correlation {
     public:
-        PortscanCorrelation(acu::Storage *storage, std::vector<acu::Threshold> *thresholds);
+        PortscanCorrelation(RocksStorage *storage, std::vector<acu::Threshold> *thresholds);
 
         acu::OutgoingAlert* Invoke();
     };

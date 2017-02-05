@@ -20,6 +20,7 @@ namespace beemaster {
     public:
         rocksdb::DB* database;
         rocksdb::Options options;
+        rocksdb::WriteOptions writeOptions;
 
         /// Initialise and open DB
         ///

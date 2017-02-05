@@ -44,11 +44,19 @@ namespace beemaster {
 
     RocksStorage::RocksStorage(std::string db_name)
         : acu::Storage::Storage(db_name) {
-            options.create_if_missing = true;
-            options.merge_operator.reset(new SetMergeOperator(delimeter));
-            rocksdb::Status status = rocksdb::DB::Open(options, db_name, &database);
-            //assert(status.ok());
-        }
+
+        options = rocksdb::Options();
+        writeOptions = rocksdb::WriteOptions();
+
+        writeOptions.sync = true;
+
+        options.create_if_missing = true;
+        options.IncreaseParallelism();
+        options.OptimizeLevelStyleCompaction();
+        options.merge_operator.reset(new SetMergeOperator(delimeter));
+        rocksdb::Status status = rocksdb::DB::Open(options, db_name, &database);
+        //assert(status.ok());
+    }
 
     // Gracefully closes DB
     RocksStorage::~RocksStorage() {
@@ -56,14 +64,14 @@ namespace beemaster {
     }
 
     void RocksStorage::Persist(const acu::IncomingAlert *alert) {
-        this->Append(alert->destination_ip(), (char*)alert->destination_port());
+        this->Append(alert->destination_ip(), std::to_string(alert->destination_port()));
 
-        database->Put(rocksdb::WriteOptions(), "date" + delimeter +  alert->destination_ip(),
-                      this->time_to_string(alert->timestamp()));
+        auto key = "date/" + alert->destination_ip();
+        database->Put(writeOptions, key, this->time_to_string(alert->timestamp()));
     }
 
     bool RocksStorage::Append(const std::string key, const std::string value){
-        rocksdb::Status status = database->Merge(rocksdb::WriteOptions(), key, value);
+        rocksdb::Status status = database->Merge(writeOptions, key, value);
         return status.ok();
     }
 
