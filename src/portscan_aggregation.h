@@ -13,6 +13,9 @@ namespace beemaster {
     public:
         PortscanAggregation(acu::Storage *storage, std::vector<acu::Threshold> *thresholds);
 
+        bool Invoke(const acu::IncomingAlert*);
+    private:
+        long alert_count;
     };
 }
 

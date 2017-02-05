@@ -14,6 +14,7 @@
 #include "portscan_correlation.h"
 #include "rocks_storage.h"
 #include "vector_storage.h"
+#include "portscan_aggregation.h"
 
 #include <csignal>
 #include <iostream>
@@ -61,31 +62,35 @@ int main(int argc, char* argv[]) {
 
     // parsing config
     auto config = ConfigParser(config_file);
-    // TODO provide defaults (maybe via default in Get...)
+
     auto rocks_path = config.GetString("storage", "location");
-    auto r_address = config.GetString("receiver", "address");
-    auto r_port = (acu::port_t)config.GetInt("receiver", "port");
-    auto s_address = config.GetString("sender", "address");
-    auto s_port = (acu::port_t)config.GetInt("sender", "port");
+    auto rec_addr = config.GetString("receiver", "address");
+    auto rec_port = (acu::port_t)config.GetInt("receiver", "port");
+    auto sender_addr = config.GetString("sender", "address");
+    auto sender_port = (acu::port_t)config.GetInt("sender", "port");
 
     // setup storages
-    auto rocks = new RocksStorage("/tmp/acu_storage");
+    auto rocks = new RocksStorage(rocks_path);
 
     // get mapper
     auto alert_mapper = new beemaster::AlertMapper();
 
     // setup algorithms
-    auto thresholds = new std::vector<acu::Threshold>;
-    thresholds->push_back(acu::Threshold(1, "test", "whatever"));
-    auto portscan = new PortscanCorrelation(rocks, thresholds);
+    auto agg_ths = new std::vector<acu::Threshold>;
+    agg_ths->push_back(acu::Threshold(50, "destination_port", "*"));
+    auto portscan_agg = new PortscanAggregation(rocks, agg_ths);
+
+    auto corr_ths= new std::vector<acu::Threshold>;
+    corr_ths->push_back(acu::Threshold(1, "test", "whatever"));
+    auto portscan_corr = new PortscanCorrelation(rocks, corr_ths);
 
     // setup acu
     auto acu = acu::Acu(rocks, alert_mapper);
     // - set connection details
-    acu.SetReceiverInfo(r_address, r_port);
-    acu.SetSenderInfo(s_address, s_port);
+    acu.SetReceiverInfo(rec_addr, rec_port);
+    acu.SetSenderInfo(sender_addr, sender_port);
     // - add algorithms
-    acu.Register(new std::vector<std::string>{"beemaster/bro/tcp"}, nullptr, portscan);
+    acu.Register(new std::vector<std::string>{"beemaster/bro/tcp"}, portscan_agg, portscan_corr);
 
     // start acu
     acu.Run();
