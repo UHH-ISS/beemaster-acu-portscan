@@ -78,10 +78,12 @@ int main(int argc, char* argv[]) {
     // setup algorithms
     auto agg_ths = new std::vector<acu::Threshold>;
     agg_ths->push_back(acu::Threshold(50, "destination_port", "*"));
+    agg_ths->push_back(acu::Threshold(10, "timestamp", "*"));
     auto portscan_agg = new PortscanAggregation(rocks, agg_ths);
 
     auto corr_ths= new std::vector<acu::Threshold>;
-    corr_ths->push_back(acu::Threshold(1, "test", "whatever"));
+    corr_ths->push_back(acu::Threshold(500, "dst_port", "*"));
+
     auto portscan_corr = new PortscanCorrelation(rocks, corr_ths);
 
     // setup acu

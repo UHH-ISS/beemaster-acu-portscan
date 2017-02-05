@@ -15,7 +15,7 @@ namespace beemaster {
 
         bool Invoke(const acu::IncomingAlert*);
     private:
-        long alert_count;
+        uint64_t alert_count;
     };
 }
 

@@ -47,6 +47,13 @@ namespace beemaster {
         /// @return         The stored value
         std::string Get(const std::string key);
 
+        /// Delete *key*.
+        ///
+        /// @param key      The key which will be deleted
+        ///
+        /// @return         Success boolean
+        bool Delete(const std::string key);
+
         /// Returns the Iterator over the rocksdb, which allows for key-value
         /// traversal:
         ///
@@ -59,11 +66,6 @@ namespace beemaster {
         /// Be aware, that the value is a rocksdb::Slice here. Cast via
         /// `*(count_t*)it->value().data()
         rocksdb::Iterator* GetIterator();
-
-    private:
-        /// Increments the given date by the specified interval and returns the result as string representation
-        std::string increment_minutes(std::chrono::time_point<std::chrono::system_clock> ts, uint16_t interval);
-        std::string time_to_string(std::chrono::time_point<std::chrono::system_clock> ts);
     };
 }
 

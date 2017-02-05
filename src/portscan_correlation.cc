@@ -5,6 +5,7 @@
 #include "portscan_correlation.h"
 #include "rocks_storage.h"
 #include <iostream>
+#include <algorithm>
 
 namespace beemaster {
 
@@ -17,15 +18,18 @@ namespace beemaster {
         auto it = rocks->GetIterator();
 
         for (it->SeekToFirst(); it->Valid(); it->Next()) {
-            std::cout << it->key().ToString() << ":" << it->value().ToString() << std::endl;
+            if (it->key().ToString().find("date/") == 0) {
+                continue;
+            }
+
+            auto ports = it->value().ToString();
+            if (std::count(ports.begin(), ports.end(), '|') +1 >= thresholds->at(0).count) {
+                std::cout << "ALERT, deine mutter brennt" << std::endl;
+            }
+
         }
         delete it;
-        /*for (it->Seek("0.0.0.0");
-            it->Valid() && it->key().ToString() < "255.255.255.255";
-            it->Next()) {
 
-            std::cout << it->value().ToString() << std::endl;
-        }*/
         return nullptr;
     }
 }

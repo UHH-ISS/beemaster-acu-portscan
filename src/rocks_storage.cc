@@ -37,7 +37,7 @@ namespace beemaster {
         this->Append(alert->destination_ip(), std::to_string(alert->destination_port()));
 
         auto key = "date/" + alert->destination_ip();
-        database->Put(writeOptions, key, this->time_to_string(alert->timestamp()));
+        database->Put(writeOptions, key, time_to_string(alert->timestamp()));
     }
 
     bool RocksStorage::Append(const std::string key, const std::string value){
@@ -56,18 +56,12 @@ namespace beemaster {
         return str;
     }
 
+    bool RocksStorage::Delete(const std::string key) {
+        auto status = database->Delete(writeOptions, key);
+        return status.ok();
+    }
+
     rocksdb::Iterator* RocksStorage::GetIterator() {
         return database->NewIterator(rocksdb::ReadOptions());
-    }
-
-    std::string RocksStorage::increment_minutes(const std::chrono::time_point<std::chrono::system_clock> ts,
-                                                uint16_t interval) {
-        auto ts_inc = ts + std::chrono::minutes(interval);
-        return this->time_to_string(ts_inc);
-    }
-
-    std::string RocksStorage::time_to_string(const std::chrono::time_point<std::chrono::system_clock> ts) {
-        auto value = std::chrono::duration_cast<std::chrono::milliseconds>(ts.time_since_epoch());
-        return std::to_string(value.count());
     }
 }
