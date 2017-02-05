@@ -9,4 +9,4 @@
 
 #### Container build
 
-The framework is included as submodule, so the container build is a lot easier. Simply do `docker build . -t acu && docker run -p 9999:9999 acu`
+The framework is included as submodule, so the container build is a lot easier. Simply do `docker build . -t acu && docker run acu`

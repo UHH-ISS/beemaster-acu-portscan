@@ -47,8 +47,6 @@ COPY mp-ids-acu-fw/src /opt/acu-fw/src
 WORKDIR /opt/acu-fw
 RUN make
 
-EXPOSE 9999
-
 COPY CMakeLists.txt /opt/acu
 COPY Makefile /opt/acu
 COPY test /opt/acu/test
