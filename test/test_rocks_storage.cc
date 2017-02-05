@@ -9,67 +9,40 @@
 #include "catch.hpp"
 
 #include <rocks_storage.h>
+#include <iostream>
 
 TEST_CASE("Testing RocksStorage initialisation", "[rocks_storage]") {
     // TODO FIXME XXX DIRTY AF
     std::system("rm -rf /tmp/test_storage");
-    auto storage = new beemaster::RocksStorage<int>("/tmp/test_storage");
+    auto storage = new beemaster::RocksStorage("/tmp/test_storage");
 
     delete storage;
 }
 
-TEST_CASE("Testing RocksStorage read/write operations", "[rocks_storage]") {
-    // TODO FIXME XXX DIRTY AF
+TEST_CASE("Test RocksStorage write operations", "[rocks_storage]") {
     std::system("rm -rf /tmp/test_storage");
     auto path = "/tmp/test_storage";
 
-    SECTION("Int, one key, single increment") {
-        auto storage = new beemaster::RocksStorage<int>(path);
-        auto key1 = "custom_key1";
+    auto storage = new beemaster::RocksStorage(path);
+    auto key = "KEY";
+    std::string value1 = "VALUE1";
+    std::string value2 = "VALUE2";
 
-        // INSERT
-        REQUIRE(storage->Increment(key1, 1));
-        // GET
-        REQUIRE(storage->Get(key1) == 1);
-        // INCREMENT
-        REQUIRE(storage->Increment(key1, 2));
-        REQUIRE(storage->Get(key1) == 3);
-
+    SECTION("Append on empty field") {
+        REQUIRE(storage->Append(key, value1));
+        REQUIRE(storage->Get(key) == value1);
         delete storage;
     }
 
-    SECTION("Float, two keys, multiple increments, set") {
-        auto storage = new beemaster::RocksStorage<float>(path);
-        auto key1 = "custom_key1";
-        auto key2 = "custom_key2";
-
-        // INSERT
-        REQUIRE(storage->Increment(key1, 0.5));
-        REQUIRE(storage->Increment(key2, 1.0));
-
-        // GET
-        REQUIRE(storage->Get(key1) == 0.5);
-        REQUIRE(storage->Get(key2) == 1.0);
-
-        // INCREMENT
-        REQUIRE(storage->Increment(key2, 1.2));
-        REQUIRE(storage->Increment(key1, 0.75));
-        REQUIRE(storage->Increment(key2, 0.05));
-
-        // CHECK
-        REQUIRE(storage->Get(key1) == 1.25);
-        REQUIRE(storage->Get(key2) == 2.25);
-
-        // SET
-        REQUIRE(storage->Set(key1, 2.0));
-        // CHECK
-        REQUIRE(storage->Get(key1) == 2.0);
-
+    SECTION("Append with merge") {
+        REQUIRE(storage->Append(key, value1));
+        REQUIRE(storage->Append(key, value2));
+        REQUIRE(storage->Get(key) == value1 + "|" + value2);
         delete storage;
     }
 }
 
-TEST_CASE("Testing RocksStorage iterator", "[rocks_storage]") {
+/*TEST_CASE("Testing RocksStorage iterator", "[rocks_storage]") {
     // TODO FIXME XXX DIRTY AF
     std::system("rm -rf /tmp/test_storage");
     auto path = "/tmp/test_storage";
@@ -98,4 +71,4 @@ TEST_CASE("Testing RocksStorage iterator", "[rocks_storage]") {
 
     delete it;
     delete storage;
-}
+}*/
