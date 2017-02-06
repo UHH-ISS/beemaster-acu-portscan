@@ -12,9 +12,14 @@ namespace beemaster {
 
     class PortscanCorrelation : public acu::Correlation {
     public:
+        const static std::string THRESHOLD_PORT_COUNT;
+
         PortscanCorrelation(RocksStorage *storage, std::vector<acu::Threshold> *thresholds);
 
         acu::OutgoingAlert* Invoke();
+
+    private:
+        uint64_t threshold_port;
     };
 }
 

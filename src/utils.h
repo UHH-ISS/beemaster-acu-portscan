@@ -5,12 +5,15 @@
 #ifndef ACU_IMPL_UTILS_H
 #define ACU_IMPL_UTILS_H
 
+#include <chrono>
+#include <string>
+
 namespace beemaster {
 
-    inline bool contains_string(std::string stack, std::string needle, char delimiter) {
+    inline bool contains_string(const std::string stack, const std::string needle, const char delimiter) {
         return stack == needle
                || stack.find(needle + delimiter) == 0 //starts with
-               || stack.find(delimiter + needle) == std::max((size_t)0, (stack.length() - needle.length() - 1)) //ends with
+               || (int)stack.find(delimiter + needle) == std::max(0, (int)(stack.length() - needle.length() - 1)) //ends with
                || stack.find(delimiter + needle + delimiter) != std::string::npos;
     }
 
@@ -20,7 +23,7 @@ namespace beemaster {
     }
 
     inline std::string decrement_minutes(const std::chrono::time_point<std::chrono::system_clock> ts,
-                                  uint16_t interval) {
+                                  const uint64_t interval) {
         auto ts_inc = ts - std::chrono::minutes(interval);
         return time_to_string(ts_inc);
     }

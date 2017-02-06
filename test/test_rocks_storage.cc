@@ -9,19 +9,20 @@
 #include "catch.hpp"
 #include <rocks_storage.h>
 
+const std::string PATH = "/tmp/test_storage";
+
 TEST_CASE("Testing RocksStorage initialisation", "[rocks_storage]") {
     // TODO FIXME XXX DIRTY AF
     std::system("rm -rf /tmp/test_storage");
-    auto storage = new beemaster::RocksStorage("/tmp/test_storage");
+    auto storage = new beemaster::RocksStorage(PATH);
 
     delete storage;
 }
 
 TEST_CASE("Test RocksStorage write operations", "[rocks_storage]") {
     std::system("rm -rf /tmp/test_storage");
-    auto path = "/tmp/test_storage";
 
-    auto storage = new beemaster::RocksStorage(path);
+    auto storage = new beemaster::RocksStorage(PATH);
     auto key = "KEY";
     std::string value1 = "VALUE_1";
     std::string value2 = "VALUE_2";

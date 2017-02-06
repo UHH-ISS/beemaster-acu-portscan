@@ -11,7 +11,7 @@
 
 namespace beemaster {
 
-    char delimiter = '|';
+    const char delimiter = '|';
 
     RocksStorage::RocksStorage(std::string db_name)
         : acu::Storage::Storage(db_name) {
@@ -45,7 +45,9 @@ namespace beemaster {
         if (existing.empty()) {
             return database->Put(writeOptions, key, value).ok();
         } else if(!contains_string(existing, value, delimiter)) {
-            return database->Put(writeOptions, key, existing + delimiter + value).ok();
+            auto insert = existing + delimiter + value;
+            auto status = database->Put(writeOptions, key, insert);
+            return status.ok();
         }
         return true;
     }
