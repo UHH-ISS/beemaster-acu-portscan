@@ -1,4 +1,4 @@
-## Lattice Implementation for a `beemaster` Alert Correlation Unit
+# Portscan ACU
 
 #### Build
 
@@ -9,22 +9,20 @@
 
 #### Container build
 
-The framework is included as submodule, so the container build is a lot easier. Simply do `docker build . -t acu && docker run acu`
+Das ACU Framework ist als git-submodule in diesem Projekt eingebunden, sodass der Container Build einfacher wird. Mit `docker build . -t acu && docker run acu` kann die ACU gebaut und gestartet werden.
 
+## RocksDB und Portscan Keydesign
 
-Notizen mit Flo, WIP:
+In der Portscan ACU wird [RocksDB](http://rocksdb.org) als persistenter Speicher verwendet. RocksDB ist ein schneller Key-Value Store, der eine native C++ API bietet.
 
-zeitintervall 	        - verlängert sich ggf jedesmal
-dst_ip			- gleiches ziel
-dst_port 		- zum checken dass ports unterschiedlich
+Um effizient auf Daten zugreifen zu können, bedarf es eines geschickten Key-Designs. Für die Portscan ACU ist dies wie folgt:
 
+`destination_ip / { desination_port }`
 
----------------------------------------------------------
+`"date" / destination_ip / last_modified_ts`
 
-DB key design
+Jedes mal, wenn ein `IncomingAlert` -- hier nur speziell TCP Events -- von Bro empfangen wird, wird dieser (durch das Framework) persistiert. Dabei wird die zugegriffene IP als Key verwendet, das Value ist die Menge aller auf dieser IP zugegriffenen Ports. Außerdem wird unter dem Prefix `date/` der Zeitstempel gespeichert, andem zuletzt auf diese IP zugegriffen wurde.
 
-dst_ip1 / { dst_ports }
-dst_ip2 / { dst_ports }
+## Portscan Erkennung
 
-date / dst_ip1 / current_range
-date / dst_ip2 / current_range
+TODO
