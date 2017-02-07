@@ -64,7 +64,7 @@ namespace beemaster {
         /// delete it;
         /// ```
         /// Be aware, that the value is a rocksdb::Slice here. Cast via
-        /// `*(count_t*)it->value().data()
+        /// `*(<type>*)it->key()/value().data() or use it->key()/value().ToString()
         rocksdb::Iterator* GetIterator();
     };
 }
