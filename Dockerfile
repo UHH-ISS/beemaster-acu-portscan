@@ -36,16 +36,15 @@ RUN rm -rf /scratch
 
 RUN mkdir /opt/acu /opt/acu-fw
 
-# well not perfect, but somehow we have to get our lib in there
-COPY mp-ids-acu-fw/CMakeLists.txt /opt/acu-fw
-COPY mp-ids-acu-fw/Makefile /opt/acu-fw
-COPY mp-ids-acu-fw/test /opt/acu-fw/test
-COPY mp-ids-acu-fw/include /opt/acu-fw/include
-COPY mp-ids-acu-fw/cmake /opt/acu-fw/cmake
-COPY mp-ids-acu-fw/src /opt/acu-fw/src
+# framework will get built in one step with 'make'
+# do not copy the whole framework folder to avoid build errors (eg the framework build folder gets copied inside the container..)
 
-WORKDIR /opt/acu-fw
-RUN make
+COPY mp-ids-acu-fw/src /opt/acu/mp-ids-acu-fw/src
+COPY mp-ids-acu-fw/include /opt/acu/mp-ids-acu-fw/include
+COPY mp-ids-acu-fw/test /opt/acu/mp-ids-acu-fw/test
+COPY mp-ids-acu-fw/cmake /opt/acu/mp-ids-acu-fw/cmake
+COPY mp-ids-acu-fw/Makefile /opt/acu/mp-ids-acu-fw/
+COPY mp-ids-acu-fw/CMakeLists.txt /opt/acu/mp-ids-acu-fw/
 
 COPY CMakeLists.txt /opt/acu
 COPY Makefile /opt/acu
