@@ -15,7 +15,8 @@ namespace beemaster {
 
         std::vector<std::string> destination_ips;
 
-        const broker::message ToMessage();
+        const std::string EventName() const override;
+        const broker::message ToMessage() const override;
     };
 }
 

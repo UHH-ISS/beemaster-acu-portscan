@@ -23,10 +23,8 @@ find_path(ACU_ROOT_DIR
     # need to hint to the possible location. [0] states that the use of PATHS is
     # the way to go.
     # [0]: https://cmake.org/pipermail/cmake/2010-October/040460.html
-    # TODO: ADD YOUR CUSTOM PATH HERE!
     PATHS
-        ../acu-fw
-        ../mp-ids-acu-fw
+        mp-ids-acu-fw
 )
 
 find_path(ACU_INCLUDE_DIR

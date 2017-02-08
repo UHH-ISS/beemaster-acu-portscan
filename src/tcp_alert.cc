@@ -9,7 +9,7 @@ namespace beemaster {
     TcpAlert::TcpAlert(const std::string *topic, const broker::message &msg)
             : IncomingAlert(topic, msg) {
         if (msg.size() < 3) {
-            throw new std::invalid_argument("topic");
+            throw new std::invalid_argument("msg to small");
         }
     }
 

@@ -11,7 +11,11 @@ namespace beemaster {
             : OutgoingAlert(name, timestamp), destination_ips(std::vector<std::string>()) {
     }
 
-    const broker::message PortscanAlert::ToMessage() {
+    const std::string PortscanAlert::EventName() const {
+        return "Beemaster::PortscanMetaAlert";
+    }
+
+    const broker::message PortscanAlert::ToMessage() const {
         auto ips = new broker::vector();
         for (const auto &ip : destination_ips) {
             ips->push_back(ip);
