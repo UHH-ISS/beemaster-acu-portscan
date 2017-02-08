@@ -3,9 +3,7 @@
 //
 
 #include "portscan_correlation.h"
-#include "rocks_storage.h"
 #include "portscan_alert.h"
-#include <iostream>
 #include <algorithm>
 
 namespace beemaster {
@@ -53,6 +51,10 @@ namespace beemaster {
         // Do we really need to call delete when the iterator goes out-of-scope
         // immediately after? What about RAII?
         delete it;
+
+        if (alert != nullptr) {
+            std::cout << "OutgoingAlert: " << alert->incidentName << std::endl;
+        }
 
         // Might be null, which is okay!
         return alert;
