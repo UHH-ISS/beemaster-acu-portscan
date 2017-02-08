@@ -1,9 +1,13 @@
 BUILD_DIR = build
+FRAMEWORK_DIR = mp-ids-acu-fw
 
 .PHONY: build test clean
 
 .ONESHELL:
 build:
+	cd $(FRAMEWORK_DIR)
+	make
+	cd ..
 	mkdir -p $(BUILD_DIR)
 	cd $(BUILD_DIR)
 	# TODO extract options correctly
