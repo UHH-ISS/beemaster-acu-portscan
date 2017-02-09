@@ -28,7 +28,7 @@ TEST_CASE("Testing ACU roundtrip dataflow", "[acu]") {
     thresholds->push_back(thr);
 
     auto inc_topic = "beemaster/bro/tcp";
-    auto alert_topic = "acu/alert";
+    auto alert_topic = "beemaster/acu/alert";
 
     auto rocks_path = "/tmp/portscan_acu_test_rocks";
     auto rec_addr = "127.0.0.1";
@@ -99,6 +99,7 @@ TEST_CASE("Testing ACU roundtrip dataflow", "[acu]") {
         usleep(1000*500); // rocksdb interaction
 
 
+        std::cout << "If the tests hangs here, the test is failing!" << std::endl;
         for (auto &msg : meta_alert_queue.need_pop()) {
             std::cout << broker::to_string(msg) <<std::endl;
             REQUIRE(msg.at(0) == "Beemaster::portscan_meta_alert");
