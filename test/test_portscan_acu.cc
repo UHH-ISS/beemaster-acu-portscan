@@ -101,9 +101,10 @@ TEST_CASE("Testing ACU roundtrip dataflow", "[acu]") {
 
         for (auto &msg : meta_alert_queue.need_pop()) {
             std::cout << broker::to_string(msg) <<std::endl;
-            REQUIRE(msg.at(0) == "portscan_meta_alert");
-            //REQUIRE(msg.at(1) == time_stamp.time_since_epoch().count());
+            REQUIRE(msg.at(0) == "Beemaster::portscan_meta_alert");
+            //REQUIRE(msg.at(1) == well, figure it..);
             REQUIRE(msg.at(2) == "Portscan");
+            REQUIRE(broker::to_string(msg.at(3)) == "[192.168.0.1]");
         }
     }
 }

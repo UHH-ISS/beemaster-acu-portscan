@@ -23,3 +23,6 @@ test: build
 
 clean:
 	$(RM) -rf $(BUILD_DIR)
+	cd $(FRAMWORK_DIR)
+	make clean
+	cd ..
