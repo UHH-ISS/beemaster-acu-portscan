@@ -53,7 +53,7 @@ namespace beemaster {
         delete it;
 
         if (alert != nullptr) {
-            std::cout << "OutgoingAlert: " << alert->incidentName << std::endl;
+            std::cout << "OutgoingAlert: " << broker::to_string(alert->ToMessage()) << std::endl;
         }
 
         // Might be null, which is okay!
