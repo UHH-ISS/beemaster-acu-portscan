@@ -23,6 +23,6 @@ test: build
 
 clean:
 	$(RM) -rf $(BUILD_DIR)
-	cd $(FRAMWORK_DIR)
+	cd $(FRAMEWORK_DIR)
 	make clean
 	cd ..
