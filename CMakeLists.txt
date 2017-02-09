@@ -7,6 +7,10 @@ project(acu-impl)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11 -Wall -Wextra -pedantic")
 
+# Disable -Wununsed-parameter as broker::get produces this error even when used correctly (I think?!)
+# TODO: Maybe scope this to the source files where broker::get is used? (Currently alert_mapper/tcp_alert and some tests)
+set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-unused-parameter")
+
 # Add ./cmake to CMAKE_MODULE_PATH to 'source' it
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 

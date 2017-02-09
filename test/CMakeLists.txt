@@ -12,7 +12,9 @@ endforeach()
 set(SOURCE_FILES
         main.cc
         test_config_parser.cc
-        test_rocks_storage.cc)
+        test_rocks_storage.cc
+        test_utils.cc
+        test_portscan_acu.cc)
 
 # Add catch (testing library)
 set(CATCH_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/lib)
