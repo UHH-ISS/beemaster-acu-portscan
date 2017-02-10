@@ -9,14 +9,22 @@
 
 namespace beemaster {
 
+    /// Type of a TCP message
     enum TcpType : unsigned int {
+        /// SYN TCP event
         SYN = 1
     };
 
     class TcpAlert : public acu::IncomingAlert {
     public:
+        /// Instantiate a TcpAlert.
+        /// This alert represents an incoming tcp event.
+        ///
+        /// \param topic    The topic, this alert was sent on
+        /// \param msg      The message of this event
         explicit TcpAlert(const std::string *, const broker::message&);
 
+        /// \return     The TcpType of this event
         const TcpType& type() const;
     };
 }

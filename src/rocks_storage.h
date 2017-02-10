@@ -18,8 +18,11 @@ namespace beemaster {
 
     class RocksStorage : public acu::Storage {
     public:
+        /// The underlying RocksDB
         rocksdb::DB* database;
+        /// The used RocksDB options
         rocksdb::Options options;
+        /// The used RocksDB WriteOptions
         rocksdb::WriteOptions writeOptions;
 
         /// Initialise and open DB

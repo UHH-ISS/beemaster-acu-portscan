@@ -20,6 +20,8 @@ namespace beemaster {
     class VectorStorage : public acu::Storage {
     public:
         /// Initialise DB
+        ///
+        /// \param db_name  The name of the database
         VectorStorage(std::string db_name);
         virtual ~VectorStorage();
 
