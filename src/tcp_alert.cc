@@ -1,6 +1,8 @@
-//
-// Created by florian on 2/1/17.
-//
+/* tcp_alert.cc
+ * ACU Implementation
+ *
+ * <src/tcp_alert.h>
+ */
 
 #include "tcp_alert.h"
 

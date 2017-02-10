@@ -1,6 +1,11 @@
-//
-// Created by florian on 2/1/17.
-//
+/* portscan_aggregation.h
+ * ACU Implementation
+ *
+ * The aggregation for the portscan. Counts up incoming tcp events
+ * and eventually allows to trigger the correlation.
+ *
+ * @author: 1wilkens, 0ortmann
+ */
 
 #ifndef ACU_IMPL_PORTSCAN_AGGREGATION_H
 #define ACU_IMPL_PORTSCAN_AGGREGATION_H
@@ -11,7 +16,7 @@ namespace beemaster {
 
     class PortscanAggregation : public acu::Aggregation {
     public:
-        /// Constant port fieldname for the threshold 
+        /// Constant port fieldname for the threshold
         const static std::string THRESHOLD_PORT;
         /// Constant timestamp fieldname for the threshold
         const static std::string THRESHOLD_TIMESTAMP;

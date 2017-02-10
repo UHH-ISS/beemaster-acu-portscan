@@ -1,6 +1,11 @@
-//
-// Created by florian on 2/6/17.
-//
+/* portscan_alert.cc
+ * ACU Implementation
+ *
+ * Implementation for an outgoing alert, as returned
+ * by the PortscanCorrelation. Holds a vector of target IPs.
+ *
+ * @author: 1wilkens, 0ortmann
+ */
 
 #ifndef ACU_IMPL_PORTSCAN_ALERT_H
 #define ACU_IMPL_PORTSCAN_ALERT_H

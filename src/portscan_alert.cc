@@ -1,6 +1,8 @@
-//
-// Created by florian on 2/6/17.
-//
+/* portscan_alert.cc
+ * ACU Implementation
+ *
+ * <src/portscan_alert.h>
+ */
 
 #include "portscan_alert.h"
 

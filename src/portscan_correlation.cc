@@ -1,6 +1,8 @@
-//
-// Created by florian on 2/1/17.
-//
+/* portscan_correlation.cc
+ * ACU Implementation
+ *
+ * <src/portscan_correlation.h>
+ */
 
 #include "portscan_correlation.h"
 #include "portscan_alert.h"
@@ -50,6 +52,7 @@ namespace beemaster {
 
         // Do we really need to call delete when the iterator goes out-of-scope
         // immediately after? What about RAII?
+        // 1jost: yes you do. at least in our tests it leaked memory otherwise...
         delete it;
 
         if (alert != nullptr) {

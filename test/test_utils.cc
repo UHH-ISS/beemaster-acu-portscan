@@ -1,6 +1,10 @@
-//
-// Created by florian on 2/6/17.
-//
+/* test_utiles.cc
+ * ACU Implementation (test)
+ *
+ * Tests for some of the utility functions.
+ *
+ * @author: 1wilkens
+ */
 
 #include "catch.hpp"
 

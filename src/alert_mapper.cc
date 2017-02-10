@@ -1,6 +1,8 @@
-//
-// Created by florian on 2/2/17.
-//
+/* alert_mapper.cc
+ * ACU Implementation
+ *
+ * <src/alert_mapper.h>
+ */
 
 #include "alert_mapper.h"
 #include "tcp_alert.h"

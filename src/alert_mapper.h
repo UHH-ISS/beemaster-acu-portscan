@@ -1,6 +1,11 @@
-//
-// Created by florian on 2/2/17.
-//
+/* alert_mapper.h
+ * ACU Implementation
+ *
+ * Provide an implementation of the AlertMapper for this
+ * particular ACU. It is implemented for TcpAlerts.
+ *
+ * @author: 1jost
+ */
 
 #ifndef ACU_IMPL_ALERTMAPPER_H
 #define ACU_IMPL_ALERTMAPPER_H

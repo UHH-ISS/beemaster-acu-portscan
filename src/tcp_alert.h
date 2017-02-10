@@ -1,6 +1,11 @@
-//
-// Created by florian on 2/1/17.
-//
+/* tcp_alert.cc
+ * ACU Implementation
+ *
+ * Specification of an IncomingAlert to symbolise
+ * a TCP event.
+ *
+ * @author: 1wilkens
+ */
 
 #ifndef ACU_IMPL_TCP_EVENT_H
 #define ACU_IMPL_TCP_EVENT_H

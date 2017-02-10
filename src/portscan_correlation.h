@@ -1,6 +1,12 @@
-//
-// Created by florian on 2/1/17.
-//
+/* portscan_correlation.cc
+ * ACU Implementation
+ *
+ * The portscan correlation. Upon invoked, it seeks through the
+ * database to find relating entries and store provide the destination
+ * IPs of those requests.
+ *
+ * @author: 1wilkens, 0ortmann
+ */
 
 #ifndef ACU_IMPL_PORTSCAN_CORRELATION_H
 #define ACU_IMPL_PORTSCAN_CORRELATION_H
@@ -16,7 +22,7 @@ namespace beemaster {
         const static std::string THRESHOLD_PORT_COUNT;
 
         /// Instantiate a PortscanCorrelation.
-        /// 
+        ///
         /// \param storage      The shared storage object
         /// \param threshold    The thresholds for operation granulation
         PortscanCorrelation(RocksStorage *storage, std::vector<acu::Threshold> *thresholds);

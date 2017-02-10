@@ -1,6 +1,8 @@
-//
-// Created by florian on 2/1/17.
-//
+/* portscan_aggregation.cc
+ * ACU Implementation
+ *
+ * <src/portscan_aggregation.h>
+ */
 
 #include "portscan_aggregation.h"
 #include "rocks_storage.h"

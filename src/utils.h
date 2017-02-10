@@ -1,6 +1,10 @@
-//
-// Created by flx on 05.02.17.
-//
+/* utils.h
+ * ACU Implementation
+ *
+ * Different helper functions to be used throughout the project.
+ *
+ * @author: 0ortmann, 1wilkens
+ */
 
 #ifndef ACU_IMPL_UTILS_H
 #define ACU_IMPL_UTILS_H
