@@ -17,7 +17,7 @@ A call to `make` will first build the framework and then build the actual ACU. T
 
 The compiled binary inside the build directory can be executed. A config file must be provided as first argument. Use the following command for a local start (local means that a Bro master is running on the same host as the ACU): `build/src/acu-impl config-local.ini`
 
-#### Container build & run
+#### Container Build & Run
 
 This repository contains a [Dockerfile](Dockerfile). It can be uesd to build the ACU with all required resources bundled into a Docker image (e.g. via `docker build . -t acu_portscan`).
 
