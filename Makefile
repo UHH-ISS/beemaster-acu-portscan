@@ -1,5 +1,5 @@
 BUILD_DIR = build
-FRAMEWORK_DIR = mp-ids-acu-fw
+FRAMEWORK_DIR = beemaster-acu-fw
 
 .PHONY: build test clean
 

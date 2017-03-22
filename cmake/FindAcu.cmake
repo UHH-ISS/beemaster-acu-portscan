@@ -24,7 +24,7 @@ find_path(ACU_ROOT_DIR
     # the way to go.
     # [0]: https://cmake.org/pipermail/cmake/2010-October/040460.html
     PATHS
-        mp-ids-acu-fw
+        beemaster-acu-fw
 )
 
 find_path(ACU_INCLUDE_DIR

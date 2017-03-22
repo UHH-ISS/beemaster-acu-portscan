@@ -8,7 +8,7 @@ A second ACU can be found at the `experimental_lattice` branch. It is a more sop
 
 The build instructions are generally the same for all branches.
 
-This repository references the ACU framework repository as a submodule in [mp-ids-acu-fw](https://github.com/UHH-ISS/beemaster-acu-fw). Please use `git clone --recursive` when cloning this repo.
+This repository references the ACU framework repository as a submodule in [beemaster-acu-fw](https://github.com/UHH-ISS/beemaster-acu-fw). Please use `git clone --recursive` when cloning this repo.
 
 
 #### Manual Build & Run

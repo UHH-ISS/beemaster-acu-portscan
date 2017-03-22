@@ -39,12 +39,12 @@ RUN mkdir /opt/acu /opt/acu-fw
 # framework will get built in one step with 'make'
 # do not copy the whole framework folder to avoid build errors (eg the framework build folder gets copied inside the container..)
 
-COPY mp-ids-acu-fw/src /opt/acu/mp-ids-acu-fw/src
-COPY mp-ids-acu-fw/include /opt/acu/mp-ids-acu-fw/include
-COPY mp-ids-acu-fw/test /opt/acu/mp-ids-acu-fw/test
-COPY mp-ids-acu-fw/cmake /opt/acu/mp-ids-acu-fw/cmake
-COPY mp-ids-acu-fw/Makefile /opt/acu/mp-ids-acu-fw/
-COPY mp-ids-acu-fw/CMakeLists.txt /opt/acu/mp-ids-acu-fw/
+COPY beemaster-acu-fw/src /opt/acu/beemaster-acu-fw/src
+COPY beemaster-acu-fw/include /opt/acu/beemaster-acu-fw/include
+COPY beemaster-acu-fw/test /opt/acu/beemaster-acu-fw/test
+COPY beemaster-acu-fw/cmake /opt/acu/beemaster-acu-fw/cmake
+COPY beemaster-acu-fw/Makefile /opt/acu/beemaster-acu-fw/
+COPY beemaster-acu-fw/CMakeLists.txt /opt/acu/beemaster-acu-fw/
 
 COPY CMakeLists.txt /opt/acu
 COPY Makefile /opt/acu
